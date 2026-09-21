@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feliz Primavera 🌼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f; --bg-glow:#1b1709; --sun:#ffd93b; --sun-2:#ffb703; --cream:#fff6d6;
+  --line:#7a4300; --leaf:#3f9a3c; --leaf-d:#2a6f28;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{
+  margin:0;height:100%;overflow:hidden;color:var(--cream);
+  font-family:'Nunito',system-ui,sans-serif;
+  background:radial-gradient(ellipse at 50% 45%,var(--bg-glow) 0%,var(--bg) 62%) ,var(--bg);
+}
+.deco{position:fixed;pointer-events:none}
+
+/* estrellas */
+.star{position:fixed;border-radius:50%;background:#fff3c4;opacity:.2;animation:tw var(--t) ease-in-out infinite alternate;pointer-events:none}
+@keyframes tw{to{opacity:.9}}
+#glow{inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(255,183,3,.22),transparent 62%);opacity:0;transition:opacity 3s}
+body.on #glow{opacity:1}
+
+/* mariposa principal */
+#hero{
+  position:fixed;left:50%;top:50%;z-index:300;padding:14px;background:none;border:0;cursor:pointer;
+  transform:translate(-50%,-50%) scale(1);
+  transition:top 1.7s cubic-bezier(.6,0,.2,1),transform 1.7s cubic-bezier(.6,0,.2,1);
+  -webkit-tap-highlight-color:transparent;
+}
+#hero:focus-visible{outline:2px dashed var(--sun);outline-offset:6px;border-radius:20px}
+body.on #hero{top:13%;transform:translate(-50%,-50%) scale(.42)}
+.arr{animation:arrive 3.2s ease-in-out both}
+@keyframes arrive{
+  0%{transform:translate(-75vw,-45vh) rotate(-28deg) scale(.35);opacity:0}
+  15%{opacity:1}
+  45%{transform:translate(-22vw,12vh) rotate(16deg) scale(.8)}
+  75%{transform:translate(9vw,-7vh) rotate(-9deg) scale(1.05)}
+  100%{transform:none}
+}
+.flt{animation:float 3.4s ease-in-out infinite alternate}
+@keyframes float{from{transform:translateY(-8px) rotate(-2deg)}to{transform:translateY(10px) rotate(2deg)}}
+.flt svg{display:block;width:clamp(160px,42vw,250px);height:auto;filter:drop-shadow(0 0 22px rgba(255,210,50,.55))}
+.wg{transform-box:fill-box;transform-origin:50% 50%;animation:flap .45s ease-in-out infinite alternate}
+@keyframes flap{from{transform:scaleX(1)}to{transform:scaleX(.3)}}
+
+#hint{
+  position:fixed;left:0;right:0;top:calc(50% + clamp(100px,17vw,140px));text-align:center;z-index:250;
+  font-weight:700;letter-spacing:.04em;color:#ffe9a0;opacity:0;pointer-events:none;
+  animation:fadein 1s 3.4s forwards,pulse 2.2s 4.4s ease-in-out infinite;
+}
+body.on #hint{animation:none;opacity:0}
+@keyframes fadein{to{opacity:1}}
+@keyframes pulse{50%{transform:scale(1.08)}}
+
+/* mensaje */
+#msg{
+  position:fixed;left:0;right:0;top:23%;z-index:200;padding:0 18px;text-align:center;pointer-events:none;
+  opacity:0;transform:translateY(18px);transition:opacity 1.4s 2.3s,transform 1.4s 2.3s;
+}
+body.on #msg{opacity:1;transform:none}
+.date{margin:0 0 4px;font-weight:600;font-size:clamp(.85rem,2.6vw,1rem);color:#ffe9a0}
+h1{
+  margin:0;font:400 clamp(2.2rem,9vw,4.4rem)/1.15 'Pacifico',cursive;
+  background:linear-gradient(90deg,#fff3a3,var(--sun),var(--sun-2));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 18px rgba(255,200,0,.35));
+}
+.card{
+  max-width:540px;margin:14px auto 0;padding:18px 22px;border-radius:22px;pointer-events:auto;
+  background:rgba(18,16,8,.6);border:1px solid rgba(255,214,59,.28);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+}
+#quote{margin:0;min-height:4.6em;display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,3.6vw,1.2rem);line-height:1.55;color:var(--cream);transition:opacity .4s}
+#quote.out{opacity:0}
+.sig{margin:10px 0 0;font-weight:700;color:var(--sun)}
+#next{
+  margin-top:10px;padding:8px 18px;border-radius:999px;cursor:pointer;font:700 .9rem 'Nunito',sans-serif;
+  color:#3a2200;background:linear-gradient(90deg,var(--sun),var(--sun-2));border:0;
+}
+#next:focus-visible{outline:2px solid #fff;outline-offset:3px}
+
+/* jardín */
+#garden{position:fixed;left:0;right:0;bottom:0;height:52%;z-index:50;pointer-events:none}
+#ground{
+  left:-10%;right:-10%;bottom:-7%;height:17%;z-index:60;opacity:0;transition:opacity 1.5s .3s;
+  background:radial-gradient(ellipse at 50% 100%,#1f5a25,#0f2f14 72%);border-radius:50% 50% 0 0/100% 100% 0 0;
+}
+body.on #ground{opacity:1}
+.fl{position:absolute;bottom:0;left:var(--x);width:var(--s);margin-left:calc(var(--s)/-2);height:calc(var(--k)*1%);transform-origin:50% 100%;animation:sway var(--sw) ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.stem{
+  position:absolute;left:50%;bottom:0;width:5px;height:100%;margin-left:-2.5px;border-radius:3px;
+  background:linear-gradient(#4aa843,var(--leaf-d));transform-origin:50% 100%;
+  animation:grow 1.4s cubic-bezier(.3,.9,.3,1) var(--d) both;
+}
+.stem::before,.stem::after{content:"";position:absolute;bottom:26%;width:24px;height:13px;background:var(--leaf)}
+.stem::before{right:100%;border-radius:100% 0 100% 0;transform:rotate(-18deg);transform-origin:100% 100%}
+.stem::after{left:100%;border-radius:0 100% 0 100%;transform:rotate(18deg);transform-origin:0 100%}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.head{
+  position:absolute;top:0;left:0;width:100%;margin-top:calc(var(--s)*-.5);z-index:2;
+  animation:bloom 1s cubic-bezier(.2,1.5,.4,1) calc(var(--d) + 1.1s) both;
+}
+.head svg{display:block;width:100%;height:auto}
+@keyframes bloom{from{transform:scale(0) rotate(-120deg)}to{transform:scale(1) rotate(0)}}
+
+/* voladores */
+.flyer{position:fixed;left:0;top:var(--y);z-index:120;pointer-events:none;animation:cross var(--dur) linear forwards}
+.flyer.rtl{animation-direction:reverse}
+.flyer.rtl .bob svg{transform:scaleX(-1)}
+@keyframes cross{from{transform:translateX(-140px)}to{transform:translateX(calc(100vw + 140px))}}
+.bob{animation:bob var(--bob,1.3s) ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-16px) rotate(-5deg)}to{transform:translateY(16px) rotate(5deg)}}
+.bw{transform-box:fill-box;transform-origin:50% 100%;animation:buzz .1s linear infinite alternate}
+@keyframes buzz{from{transform:rotate(-8deg)}to{transform:rotate(14deg)}}
+
+/* pétalos y destellos */
+.petal{position:fixed;top:0;z-index:130;pointer-events:none;background:linear-gradient(135deg,#ffe066,#ffb703);border-radius:60% 0 60% 0;opacity:0;animation:fall var(--dur) linear var(--dl) infinite}
+@keyframes fall{
+  0%{transform:translate3d(0,-10vh,0) rotate(0);opacity:0}
+  10%{opacity:.95}
+  100%{transform:translate3d(var(--dx),110vh,0) rotate(600deg);opacity:.8}
+}
+.sp{position:fixed;z-index:310;width:8px;height:8px;margin:-4px;border-radius:50%;background:#ffe066;box-shadow:0 0 10px #ffd93b;pointer-events:none;animation:sp 1.1s ease-out forwards}
+@keyframes sp{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+
+@media (max-height:520px){
+  #msg{top:22%} h1{font-size:2rem} .card{padding:10px 16px;margin-top:8px}
+  #quote{min-height:3.4em;font-size:.95rem} .sig{display:none}
+}
+@media (prefers-reduced-motion:reduce){.star,.petal,.fl,.flt{animation:none}}
+</style>
+</head>
+<body>
+<div id="glow" class="deco"></div>
+
+<button id="hero" type="button" aria-label="Toca la mariposa para abrir tu tarjeta">
+  <div class="arr"><div class="flt" id="heroBf"></div></div>
+</button>
+<div id="hint">Toca la mariposa ✨</div>
+
+<main id="msg">
+  <p class="date">21 de septiembre · Día de la Primavera</p>
+  <h1>¡Feliz Primavera!</h1>
+  <div class="card">
+    <p id="quote" aria-live="polite"></p>
+    <p class="sig">Con mucho cariño de Carlos 💛</p>
+    <button id="next" type="button">Otro mensaje 🌼</button>
+  </div>
+</main>
+
+<div id="garden"></div>
+<div id="ground" class="deco"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const R = (a, b) => a + Math.random() * (b - a);
+const O = '#7a4300';
+
+/* ---------- Mensajes (edítalos a tu gusto) ---------- */
+const M = [
+  "Eres como las flores de primavera: después de cada invierno siempre vuelves a florecer, más fuerte y más hermosa.",
+  "Tu luz no necesita permiso para brillar. Sigue creciendo hacia el sol, a tu propio ritmo.",
+  "Las mujeres como tú convierten cada obstáculo en un jardín. Nunca subestimes tu fuerza.",
+  "Hoy celebro tu valentía, tu dulzura y tus ganas de seguir adelante. ¡Gracias por ser mi amiga!",
+  "Que esta primavera te traiga alegría, sueños cumplidos y muchas razones para sonreír.",
+  "No compares tu capítulo uno con el capítulo veinte de nadie. Florecerás cuando sea tu momento."
+];
+
+/* ---------- Dibujos SVG ---------- */
+function bf(c1, c2, w) {
+  const half = `
+    <path d="M98 76C86 30 46-2 14 10 -4 18 6 58 30 72c20 12 50 12 68 8Z" fill="${c1}" stroke="${O}" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M98 82C76 88 40 92 36 120c-3 26 38 32 54 2 6-12 8-26 8-40Z" fill="${c2}" stroke="${O}" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="34" cy="36" r="8" fill="#fff6c2"/><circle cx="58" cy="120" r="6" fill="#fff6c2"/>`;
+  return `<svg viewBox="0 0 200 160" ${w ? `width="${w}"` : ''} aria-hidden="true">
+    <g class="wg">${half}<g transform="translate(200 0) scale(-1 1)">${half}</g></g>
+    <path d="M97 44Q86 20 76 18M103 44Q114 20 124 18" stroke="#3a2200" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <ellipse cx="100" cy="84" rx="5.5" ry="34" fill="#3a2200"/><circle cx="100" cy="48" r="7" fill="#3a2200"/></svg>`;
+}
+function bee(w) {
+  return `<svg viewBox="0 0 70 50" width="${w}" aria-hidden="true">
+    <g class="bw"><ellipse cx="28" cy="14" rx="10" ry="14" transform="rotate(-25 28 20)" fill="#d6f1ff" fill-opacity=".8" stroke="#4a2a00" stroke-width="1.5"/></g>
+    <g class="bw"><ellipse cx="41" cy="13" rx="9" ry="13" transform="rotate(15 41 20)" fill="#d6f1ff" fill-opacity=".8" stroke="#4a2a00" stroke-width="1.5"/></g>
+    <ellipse cx="36" cy="32" rx="22" ry="14" fill="#ffc933" stroke="#4a2a00" stroke-width="2.5"/>
+    <path d="M28 19Q24 32 28 45M40 18.500Q36 32 40 45.500" stroke="#2b1a00" stroke-width="5" fill="none"/>
+    <path d="M14 32l-7 2 7 2Z" fill="#2b1a00"/>
+    <circle cx="57" cy="30" r="9" fill="#2b1a00"/><circle cx="60" cy="28" r="2.4" fill="#fff"/>
+    <path d="M60 22q4-6 8-6" stroke="#2b1a00" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>`;
+}
+function flower(t) {
+  let p = '';
+  if (t === 0) { // margarita amarilla
+    for (let i = 0; i < 12; i++) p += `<ellipse cx="50" cy="20" rx="8.5" ry="19" transform="rotate(${i * 30} 50 50)" fill="#ffd93b" stroke="${O}" stroke-width="2"/>`;
+    p += `<circle cx="50" cy="50" r="13" fill="#9a5a0c" stroke="${O}" stroke-width="2"/><circle cx="46" cy="46" r="3" fill="#d69a3a"/><circle cx="54" cy="53" r="2.5" fill="#d69a3a"/>`;
+  } else if (t === 1) { // girasol
+    for (let i = 0; i < 16; i++) p += `<path d="M50 3Q61 22 55 35L45 35Q39 22 50 3Z" transform="rotate(${i * 22.5} 50 50)" fill="#ffb703" stroke="${O}" stroke-width="1.6"/>`;
+    for (let i = 0; i < 16; i++) p += `<path d="M50 9Q59 24 54 36L46 36Q41 24 50 9Z" transform="rotate(${i * 22.5 + 11} 50 50)" fill="#ffd93b" stroke="${O}" stroke-width="1.6"/>`;
+    p += `<circle cx="50" cy="50" r="17" fill="#6b3a0a" stroke="${O}" stroke-width="2"/>`;
+    for (let i = 0; i < 7; i++) p += `<circle cx="${50 + 8 * Math.cos(i)}" cy="${50 + 8 * Math.sin(i)}" r="1.8" fill="#c98a2b"/>`;
+  } else if (t === 2) { // tulipán
+    p = `<path d="M22 30Q20 80 50 90Q80 80 78 30L64 48 50 22 36 48Z" fill="#ffd93b" stroke="${O}" stroke-width="2.5" stroke-linejoin="round"/>
+         <path d="M36 48L50 22 64 48Q50 60 36 48Z" fill="#ffe97a" stroke="${O}" stroke-width="2" stroke-linejoin="round"/>`;
+  } else { // botón de oro
+    for (let i = 0; i < 5; i++) p += `<circle cx="50" cy="27" r="19" transform="rotate(${i * 72} 50 50)" fill="#ffdf3d" stroke="${O}" stroke-width="2"/>`;
+    p += `<circle cx="50" cy="50" r="12" fill="#ffb703" stroke="${O}" stroke-width="2"/><circle cx="47" cy="47" r="3" fill="#fff0a0"/>`;
+  }
+  return `<svg viewBox="0 0 100 100" aria-hidden="true">${p}</svg>`;
+}
+
+/* ---------- Fondo ---------- */
+$('#heroBf').innerHTML = bf('#ffd93b', '#ffb703');
+for (let i = 0; i < 48; i++) {
+  const s = document.createElement('i'), z = R(1, 3);
+  s.className = 'star';
+  s.style.cssText = `left:${R(0, 100)}%;top:${R(0, 100)}%;width:${z}px;height:${z}px;--t:${R(1.5, 4)}s;animation-delay:${R(0, 3)}s`;
+  document.body.appendChild(s);
+}
+
+/* ---------- Mensajes rotativos ---------- */
+const q = $('#quote'); let qi = 0, timer;
+q.textContent = M[0];
+function nextMsg() {
+  qi = (qi + 1) % M.length; q.classList.add('out');
+  setTimeout(() => { q.textContent = M[qi]; q.classList.remove('out'); }, 400);
+  clearInterval(timer); timer = setInterval(nextMsg, 9000);
+}
+$('#next').addEventListener('click', nextMsg);
+
+/* ---------- Efectos ---------- */
+function burst() {
+  const r = $('#hero').getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('i'), a = R(0, 6.28), d = R(60, 190);
+    s.className = 'sp';
+    s.style.cssText = `left:${x}px;top:${y}px;--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px`;
+    s.addEventListener('animationend', () => s.remove());
+    document.body.appendChild(s);
+  }
+}
+function garden() {
+  const g = $('#garden'), W = innerWidth, n = Math.max(9, Math.min(22, Math.round(W / 70)));
+  const base = W < 600 ? 46 : 74;
+  for (let i = 0; i < n; i++) {
+    const x = Math.min(97, Math.max(3, (i + .5) / n * 100 + R(-2, 2)));
+    let k = R(22, 85); if (Math.abs(x - 50) < 22) k *= .62;
+    const s = Math.round(base * R(.8, 1.4)), d = R(.1, 2.3).toFixed(2);
+    const f = document.createElement('div');
+    f.className = 'fl';
+    f.style.cssText = `--x:${x}%;--k:${k.toFixed(0)};--s:${s}px;--d:${d}s;--sw:${R(3, 5).toFixed(1)}s;z-index:${100 - Math.round(k)}`;
+    f.innerHTML = `<div class="stem"></div><div class="head">${flower(i % 4)}</div>`;
+    g.appendChild(f);
+  }
+}
+function petals() {
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('i'), s = R(9, 17);
+    p.className = 'petal';
+    p.style.cssText = `left:${R(0, 100)}%;width:${s}px;height:${s * .62}px;--dx:${R(-90, 90)}px;--dur:${R(9, 16)}s;--dl:${R(0, 9)}s`;
+    document.body.appendChild(p);
+  }
+}
+const PAIRS = [['#ffd93b', '#ffb703'], ['#ffe66d', '#ff9f1c'], ['#fff3a3', '#ffc857'], ['#ffcf33', '#f4a300']];
+function flyer(kind) {
+  const d = document.createElement('div'), small = innerWidth < 600, rtl = Math.random() < .5;
+  const w = (kind === 'bee' ? R(44, 62) : R(56, 84)) * (small ? .8 : 1);
+  const c = PAIRS[Math.floor(Math.random() * PAIRS.length)];
+  d.className = 'flyer' + (rtl ? ' rtl' : '');
+  d.style.cssText = `--y:${R(8, 62).toFixed(0)}%;--dur:${R(10, 17).toFixed(1)}s`;
+  d.innerHTML = `<div class="bob" style="--bob:${R(1, 2).toFixed(1)}s">${kind === 'bee' ? bee(w) : bf(c[0], c[1], w)}</div>`;
+  d.addEventListener('animationend', e => { if (e.target === d) d.remove(); });
+  document.body.appendChild(d);
+}
+
+/* ---------- Inicio ---------- */
+let on = false;
+$('#hero').addEventListener('click', () => {
+  if (on) { burst(); return; }
+  on = true;
+  document.body.classList.add('on');
+  burst(); garden(); petals(); nextMsgReset();
+  setTimeout(() => { flyer('bee'); flyer('bf'); }, 1400);
+  setTimeout(() => flyer('bee'), 3200);
+  setInterval(() => {
+    if (!document.hidden && document.querySelectorAll('.flyer').length < 6) flyer(Math.random() < .55 ? 'bee' : 'bf');
+  }, 4500);
+});
+function nextMsgReset() { clearInterval(timer); timer = setInterval(nextMsg, 9000); }
+</script>
+</body>
+</html>
